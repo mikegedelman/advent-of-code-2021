@@ -1,5 +1,4 @@
 #include <iostream>
-#include <optional>
 #include <vector>
 #include <unistd.h>
 
@@ -50,6 +49,6 @@ void part2() {
     std::cout << "Depth measurement increases: " << increases << std::endl;
 }
 
-int main(int argc, char **argv) {
+int main() {
     part2();
 }
