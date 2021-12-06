@@ -33,7 +33,7 @@ def plot_line(plot, line):
     else:
         # diagonal cases:
         #   positive slope: (1, 1) -> (5, 5). Add one to each coord every step.
-        #   negative slope: (0, 8) -> (8, 0)        
+        #   negative slope: (0, 8) -> (8, 0). X coord increasing, Y coord decreasing.
         slope = int((line.end.y - line.begin.y) / (line.end.x - line.begin.x))
         assert slope in (1, -1)
         
