@@ -1,7 +1,8 @@
 import sys
 
 def get_fuel_cost(from_pos, to_pos):
-    return sum(range(abs(from_pos - to_pos) + 1))
+    dist = abs(from_pos - to_pos)
+    return int((dist * (dist + 1)) / 2)
 
 def main():
     input_lines = []
