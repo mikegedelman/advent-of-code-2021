@@ -21,16 +21,9 @@ class Point:
             surrounding.append(Point(self.row, self.col + 1))
 
         if self.row > 0:
-            prev_line = lines[self.row - 1]
-            from_col = max(self.col - 1, 0)
-            to_col = min(self.col + 2, len(prev_line))
-            surrounding += [Point(self.row - 1, col) for col in range(from_col, to_col)]
-
+            surrounding.append(Point(self.row - 1, self.col))
         if self.row < len(lines) - 1:
-            next_line = lines[self.row + 1]
-            from_col = max(self.col - 1, 0)
-            to_col = min(self.col + 2, len(next_line))
-            surrounding += [Point(self.row + 1, col) for col in range(from_col, to_col)]
+            surrounding.append(Point(self.row + 1, self.col))
 
         return surrounding
     
@@ -50,18 +43,20 @@ def bfs(lines, root):
     basin_points = {root}
     q = SimpleQueue()
     q.put(root)
-
+    visited = set()
     while not q.empty():
         cur = q.get()
         cur_val = cur.value(lines)
 
         for adjacent in cur.surrounding(lines):
             adj_val = adjacent.value(lines)
-            if adj_val < 9 and adj_val == (cur_val + 1):
-                basin_points.add(adjacent)
-                q.put(adjacent)
+            if adj_val < 9 and cur_val <= adj_val:
+                if adjacent not in visited:
+                    basin_points.add(adjacent)
+                    q.put(adjacent)
+                    visited.add(adjacent)
     
-    return list(basin_points)
+    return basin_points
 
 
 def main():
@@ -81,16 +76,13 @@ def main():
 
     print("Risk sum: ", sum(p.value(int_lines) + 1 for p in low_points))
     basin_sizes = []
+    basin_points = set()
     for low_point in low_points:
         basin = bfs(int_lines, low_point)
+        basin_points |= set(basin)
         basin_sizes.append(len(basin))
 
-    # basins = [bfs(int_lines, p) for p in low_points]
-    # for basin in basins:
-    #     print(basin)
     largest_3_basins = heapq.nlargest(3, basin_sizes)
-    print(len(basin_sizes))
-    print(largest_3_basins)
     print("Largest 3 basins multiplied: ", functools.reduce(lambda a, b: a * b, largest_3_basins))
 
 main()
