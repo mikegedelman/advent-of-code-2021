@@ -53,7 +53,7 @@ function deduceDigit(signal, easyDigitsMap) {
     }
 
     // 0: len 6, not 9, contains 1
-    // 2: len 5, countains 3 of the letters in 4(???)
+    // 2: len 5, contains 3 of the letters in 4
     // 3: len 5, contains 1
     // 5: len 5, not 2 or 3
     // 6: len 6, not 9 or 0
@@ -82,8 +82,6 @@ function deduceDigit(signal, easyDigitsMap) {
 
     throw "this should be unreachable...";
 }
-
-
 
 function getOutput(entry) {
     const easyDigitsMap = {};
